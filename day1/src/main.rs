@@ -1,17 +1,4 @@
-use std::io::BufRead;
-
-fn read_input<T>(file_name: &str) -> impl Iterator<Item = T>
-where
-    T: std::str::FromStr,
-    <T as std::str::FromStr>::Err: std::fmt::Debug,
-{
-    let file = std::fs::File::open(file_name).unwrap();
-    let reader = std::io::BufReader::new(file);
-    reader
-        .lines()
-        .map(|line| line.unwrap())
-        .map(|line| line.parse::<T>().unwrap())
-}
+use util::read_input;
 
 fn solve(input: &[usize], target: usize) -> Option<(usize, usize)> {
     let mut low_index = 0;
