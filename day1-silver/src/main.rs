@@ -18,16 +18,18 @@ fn solve(input: &[usize], target: usize) -> Option<(usize, usize)> {
     let mut high_index = input.len() - 1;
 
     loop {
-        if high_index <= low_index {
-            return None;
-        }
-
         let low = input[low_index];
         let high = input[high_index];
 
         if low + high < target {
+            if low_index == input.len() - 1 {
+                return None;
+            }
             low_index += 1;
         } else if low + high > target {
+            if high_index == 0 {
+                return None;
+            }
             high_index -= 1;
         } else {
             return Some((low, high))
@@ -38,7 +40,7 @@ fn solve(input: &[usize], target: usize) -> Option<(usize, usize)> {
 fn solve_2(input: &[usize]) -> usize {
     let mut values = input.iter().map(|val| *val).collect::<Vec<usize>>();
     values.sort_unstable();
-    let (low, high) = solve(input, 2020).unwrap();
+    let (low, high) = solve(&values, 2020).unwrap();
     low * high
 }
 
@@ -60,7 +62,7 @@ fn main() {
 
     let input = read_input::<usize>(&args[1]).collect::<Vec<usize>>();
 
-    //println!("{}", solve_2(&input));
+    println!("{}", solve_2(&input));
     println!("{}", solve_3(&input));
 }
 
