@@ -1,14 +1,20 @@
 use std::io::BufRead;
 
-fn read_input<T>(file_name: &str) -> impl Iterator<Item = T> 
-where T: std::str::FromStr, <T as std::str::FromStr>::Err : std::fmt::Debug {
+fn read_input<T>(file_name: &str) -> impl Iterator<Item = T>
+where
+    T: std::str::FromStr,
+    <T as std::str::FromStr>::Err: std::fmt::Debug,
+{
     let file = std::fs::File::open(file_name).unwrap();
     let reader = std::io::BufReader::new(file);
-    reader.lines().map(|line| line.unwrap()).map(|line| line.parse::<T>().unwrap())
+    reader
+        .lines()
+        .map(|line| line.unwrap())
+        .map(|line| line.parse::<T>().unwrap())
 }
 
 fn solve(input: &[usize]) -> usize {
-    
+    0
 }
 
 fn main() {
