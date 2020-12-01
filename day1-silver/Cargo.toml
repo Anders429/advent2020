@@ -3,6 +3,3 @@ name = "day1-silver"
 version = "0.1.0"
 authors = ["Anders429 <anders.stefan.evensen@gmail.com>"]
 edition = "2018"
-
-[dependencies]
-csv = "1.1"
