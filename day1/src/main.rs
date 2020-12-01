@@ -62,7 +62,9 @@ fn main() {
 
     let input = read_input::<usize>(&args[1]).collect::<Vec<usize>>();
 
+    // First star.
     println!("{}", solve_2(&input));
+    // Second star.
     println!("{}", solve_3(&input));
 }
 
