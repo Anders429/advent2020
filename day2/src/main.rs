@@ -86,7 +86,6 @@ fn hard(input: &[Entry]) -> usize {
             }
         }
         if found {
-            println!("{}, {}", entry.password, found);
             result += 1;
         }
     }
