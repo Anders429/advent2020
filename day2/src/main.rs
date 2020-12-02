@@ -1,4 +1,4 @@
-use std::str::FromStr;
+use std::str::{Chars, FromStr};
 use util::read_input;
 
 struct Entry {
@@ -8,42 +8,52 @@ struct Entry {
     password: String,
 }
 
+fn collect_chars_until_character(chars: &mut Chars, end: char) -> String {
+    let mut result = String::new();
+    loop {
+        let c = match chars.next() {
+            Some(c) => c,
+            None => {
+                return result;
+            }
+        };
+        if c == end {
+            return result;
+        }
+        result.push(c);
+    }
+}
+
 impl FromStr for Entry {
     type Err = String;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let mut chars = s.chars();
-        let mut min_str = String::new();
-        loop {
-            let c = chars.next().unwrap();
-            if c == '-' {
-                break;
-            }
-            min_str.push(c);
-        }
-        let min = usize::from_str(&min_str).unwrap();
-        let mut max_str = String::new();
-        loop {
-            let c = chars.next().unwrap();
-            if c == ' ' {
-                break;
-            }
-            max_str.push(c);
-        }
-        let max = usize::from_str(&max_str).unwrap();
 
-        let c = chars.next().unwrap();
+        let min = match usize::from_str(&collect_chars_until_character(&mut chars, '-')) {
+            Ok(val) => val,
+            Err(err) => {
+                return Err(format!("{}", err));
+            }
+        };
+        let max = match usize::from_str(&collect_chars_until_character(&mut chars, ' ')) {
+            Ok(val) => val,
+            Err(err) => {
+                return Err(format!("{}", err));
+            }
+        };
+        let c = match chars.next() {
+            Some(c) => c,
+            None => {
+                return Err("No character found.".to_string());
+            }
+        };
+
+        // Skip the ':' and the ' '.
         chars.next();
         chars.next();
 
-        let mut password = String::new();
-        loop {
-            let ch = match chars.next() {
-                Some(ch) => ch,
-                None => {break;}
-            };
-            password.push(ch);
-        }
+        let password = chars.collect::<String>();
 
         Ok(Self {
             c,
@@ -59,7 +69,7 @@ fn easy(input: &[Entry]) -> usize {
     for entry in input {
         let mut count = 0;
         for c in entry.password.chars() {
-            if c ==  entry.c {
+            if c == entry.c {
                 count += 1;
             }
         }
@@ -103,9 +113,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use crate::Entry;
-    use crate::easy;
-    use crate::hard;
+    use crate::{easy, hard, Entry};
 
     #[test]
     fn test_easy() {
