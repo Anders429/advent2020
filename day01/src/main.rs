@@ -19,7 +19,7 @@ fn solve(input: &[usize], target: usize) -> Option<(usize, usize)> {
             }
             high_index -= 1;
         } else {
-            return Some((low, high))
+            return Some((low, high));
         }
     }
 }

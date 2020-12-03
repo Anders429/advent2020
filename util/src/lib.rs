@@ -2,7 +2,6 @@
 ///
 /// These are functions that can likely be used across multiple days. Having them bundled in this
 /// crate prevents having to rewrite the same generic code for each day, saving time.
-
 use std::{
     fmt::Debug,
     fs::File,
@@ -33,7 +32,10 @@ where
     reader
         .lines()
         .map(|line| line.expect("Could not read line"))
-        .map(|line| line.parse::<T>().expect(&format!("Could not parse line {}", line)))
+        .map(|line| {
+            line.parse::<T>()
+                .expect(&format!("Could not parse line {}", line))
+        })
 }
 
 #[cfg(test)]
@@ -42,7 +44,10 @@ mod tests {
 
     #[test]
     fn read_input_integer() {
-        assert_eq!(read_input::<usize>("int_input").collect::<Vec<usize>>(), vec![1,2,3,4]);
+        assert_eq!(
+            read_input::<usize>("int_input").collect::<Vec<usize>>(),
+            vec![1, 2, 3, 4]
+        );
     }
 
     #[test]
