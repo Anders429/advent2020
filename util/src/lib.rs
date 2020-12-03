@@ -22,6 +22,7 @@ use std::{
 /// // See `int_input` file, which has the numbers 1, 2, 3, and 4 separated by newline characters.
 /// let input = read_input::<u8>("int_input");
 /// assert_eq!(input.collect::<Vec<u8>>(), vec![1, 2, 3, 4]);
+/// ```
 pub fn read_input<T>(file_name: &str) -> impl Iterator<Item = T>
 where
     T: FromStr,
