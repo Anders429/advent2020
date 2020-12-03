@@ -5,14 +5,7 @@ fn solve(input: &[String], right: usize, down: usize) -> usize {
 
     let mut index = 0;
     let mut iter = input.iter();
-    let mut first = true;
     loop {
-        if !first {
-            for _ in 0..(down - 1) {
-                iter.next();
-            }
-        }
-        first = false;
         let row = match iter.next() {
             Some(r) => r,
             None => {
@@ -24,6 +17,10 @@ fn solve(input: &[String], right: usize, down: usize) -> usize {
         }
         index += right;
         index %= row.len();
+
+        for _ in 0..(down - 1) {
+            iter.next();
+        }
     }
     result
 }
