@@ -1,7 +1,7 @@
 use std::{ops::Add, str::FromStr};
 use util::read_input;
 
-#[derive(Debug, Default)]
+#[derive(Default)]
 struct Passport {
     byr: Option<String>,
     iyr: Option<String>,
@@ -147,8 +147,8 @@ impl FromStr for Passport {
 impl Add for &Passport {
     type Output = Passport;
 
-    fn add(self, other: Self) -> Passport {
-        Passport {
+    fn add(self, other: Self) -> Self::Output {
+        Self::Output {
             byr: self.byr.clone().or(other.byr.clone()),
             iyr: self.iyr.clone().or(other.iyr.clone()),
             eyr: self.eyr.clone().or(other.eyr.clone()),
@@ -165,7 +165,6 @@ fn combine_passports(input: &[Passport]) -> Vec<Passport> {
     let mut result = Vec::new();
     let mut combined = Passport::default();
     for passport in input {
-        //dbg!(&passport);
         if passport.is_empty() {
             if !combined.is_empty() {
                 result.push(combined);
