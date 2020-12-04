@@ -1,7 +1,7 @@
 use std::{ops::Add, str::FromStr};
 use util::read_input;
 
-#[derive(Default)]
+#[derive(Debug, Default, PartialEq)]
 struct Passport {
     byr: Option<String>,
     iyr: Option<String>,
@@ -193,6 +193,7 @@ fn combine_passports(input: &[Passport]) -> Vec<Passport> {
         }
         combined = &combined + &passport;
     }
+    // Add the last passport.
     if !combined.is_empty() {
         result.push(combined);
     }
@@ -215,4 +216,81 @@ fn main() {
 }
 
 #[cfg(test)]
-mod tests {}
+mod tests {
+    use crate::{combine_passports, Passport};
+    use std::str::FromStr;
+
+    #[test]
+    fn from_str() {
+        let empty = Passport::from_str("").unwrap();
+        assert!(empty.byr.is_none());
+        assert!(empty.iyr.is_none());
+        assert!(empty.eyr.is_none());
+        assert!(empty.hgt.is_none());
+        assert!(empty.hcl.is_none());
+        assert!(empty.ecl.is_none());
+        assert!(empty.pid.is_none());
+        assert!(empty.cid.is_none());
+
+        let non_empty = Passport::from_str("ecl:gry pid:860033327 eyr:2020 hcl:#fffffd").unwrap();
+        assert!(non_empty.byr.is_none());
+        assert!(non_empty.iyr.is_none());
+        assert_eq!(non_empty.eyr, Some("2020".to_string()));
+        assert!(non_empty.hgt.is_none());
+        assert_eq!(non_empty.hcl, Some("#fffffd".to_string()));
+        assert_eq!(non_empty.ecl, Some("gry".to_string()));
+        assert_eq!(non_empty.pid, Some("860033327".to_string()));
+        assert!(non_empty.cid.is_none());
+    }
+
+    #[test]
+    fn add() {
+        let a = Passport::from_str("ecl:gry pid:860033327 eyr:2020 hcl:#fffffd").unwrap();
+        let b = Passport::from_str("byr:1937 iyr:2017 cid:147 hgt:183cm").unwrap();
+
+        let combined = &a + &b;
+
+        assert_eq!(combined.byr, Some("1937".to_string()));
+        assert_eq!(combined.iyr, Some("2017".to_string()));
+        assert_eq!(combined.eyr, Some("2020".to_string()));
+        assert_eq!(combined.hgt, Some("183cm".to_string()));
+        assert_eq!(combined.hcl, Some("#fffffd".to_string()));
+        assert_eq!(combined.ecl, Some("gry".to_string()));
+        assert_eq!(combined.pid, Some("860033327".to_string()));
+        assert_eq!(combined.cid, Some("147".to_string()));
+    }
+
+    #[test]
+    fn is_empty() {
+        let empty = Passport::from_str("").unwrap();
+
+        assert!(empty.is_empty());
+    }
+
+    #[test]
+    fn is_valid() {
+        let a = Passport::from_str("ecl:gry pid:860033327 eyr:2020 hcl:#fffffd").unwrap();
+        let b = Passport::from_str("byr:1937 iyr:2017 cid:147 hgt:183cm").unwrap();
+
+        let combined = &a + &b;
+
+        assert!(combined.is_valid());
+    }
+
+    #[test]
+    fn combine() {
+        let input = [
+            Passport::from_str("ecl:gry pid:860033327 eyr:2020 hcl:#fffffd").unwrap(),
+            Passport::from_str("byr:1937 iyr:2017 cid:147 hgt:183cm").unwrap(),
+            Passport::from_str("").unwrap(),
+            Passport::from_str("iyr:2013 ecl:amb cid:350 eyr:2023 pid:028048884").unwrap(),
+            Passport::from_str("hcl:#cfa07d byr:1929").unwrap(),
+        ];
+
+        let combined_inputs = combine_passports(&input);
+
+        assert_eq!(combined_inputs.len(), 2);
+        assert_eq!(combined_inputs[0], &input[0] + &input[1]);
+        assert_eq!(combined_inputs[1], &input[3] + &input[4]);
+    }
+}
