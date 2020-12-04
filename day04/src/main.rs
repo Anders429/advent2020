@@ -15,14 +15,14 @@ struct Passport {
 
 impl Passport {
     fn is_empty(&self) -> bool {
-        self.byr.is_none() &&
-        self.iyr.is_none() &&
-        self.eyr.is_none() &&
-        self.hgt.is_none() &&
-        self.hcl.is_none() &&
-        self.ecl.is_none() &&
-        self.pid.is_none() &&
-        self.cid.is_none()
+        self.byr.is_none()
+            && self.iyr.is_none()
+            && self.eyr.is_none()
+            && self.hgt.is_none()
+            && self.hcl.is_none()
+            && self.ecl.is_none()
+            && self.pid.is_none()
+            && self.cid.is_none()
     }
 
     fn is_valid(&self) -> bool {
@@ -32,8 +32,10 @@ impl Passport {
                 if byr.len() != 4 || byr_int < 1920 || byr_int > 2002 {
                     return false;
                 }
-            },
-            None => {return false;}
+            }
+            None => {
+                return false;
+            }
         }
         match &self.iyr {
             Some(iyr) => {
@@ -41,8 +43,10 @@ impl Passport {
                 if iyr.len() != 4 || iyr_int < 2010 || iyr_int > 2020 {
                     return false;
                 }
-            },
-            None => {return false;}
+            }
+            None => {
+                return false;
+            }
         }
         match &self.eyr {
             Some(eyr) => {
@@ -50,27 +54,34 @@ impl Passport {
                 if eyr.len() != 4 || eyr_int < 2020 || eyr_int > 2030 {
                     return false;
                 }
-            },
-            None => {return false;}
+            }
+            None => {
+                return false;
+            }
         }
         match &self.hgt {
             Some(hgt) => {
                 let val = hgt[0..(hgt.len() - 2)].parse::<usize>().unwrap();
                 let unit = &hgt[(hgt.len() - 2)..hgt.len()];
                 match unit {
-                    "cm" => {if val < 150 || val > 193 {
+                    "cm" => {
+                        if val < 150 || val > 193 {
                             return false;
                         }
-                    },
+                    }
                     "in" => {
                         if val < 59 || val > 76 {
                             return false;
                         }
-                    },
-                    _ => {return false;}
+                    }
+                    _ => {
+                        return false;
+                    }
                 }
-            },
-            None => {return false;}
+            }
+            None => {
+                return false;
+            }
         }
         match &self.hcl {
             Some(hcl) => {
@@ -78,7 +89,7 @@ impl Passport {
                 if chars.next().unwrap() != '#' {
                     return false;
                 }
-                let mut counter = 0; 
+                let mut counter = 0;
                 for c in chars {
                     counter += 1;
                     if !(c.is_ascii_hexdigit() && !c.is_ascii_uppercase()) {
@@ -88,16 +99,20 @@ impl Passport {
                 if counter != 6 {
                     return false;
                 }
-            },
-            None => {return false;}
+            }
+            None => {
+                return false;
+            }
         }
         match &self.ecl {
             Some(ecl) => {
                 if !["amb", "blu", "brn", "grn", "gry", "hzl", "oth"].contains(&ecl.as_str()) {
                     return false;
                 }
-            },
-            None => {return false;}
+            }
+            None => {
+                return false;
+            }
         }
         match &self.pid {
             Some(pid) => {
@@ -105,11 +120,15 @@ impl Passport {
                     return false;
                 }
                 match pid.parse::<usize>() {
-                    Ok(_) => {},
-                    Err(_) => {return false;}
+                    Ok(_) => {}
+                    Err(_) => {
+                        return false;
+                    }
                 }
-            },
-            None => {return false;}
+            }
+            None => {
+                return false;
+            }
         }
         true
     }
@@ -137,7 +156,8 @@ impl FromStr for Passport {
                 "pid" => passport.pid = Some(value.to_string()),
                 "cid" => passport.cid = Some(value.to_string()),
                 _ => {
-                    return Err("Invalid key.".to_string());}
+                    return Err("Invalid key.".to_string());
+                }
             }
         }
         Ok(passport)
@@ -185,10 +205,14 @@ fn main() {
     let input = read_input::<Passport>(&args[1]).collect::<Vec<Passport>>();
     let combined_input = combine_passports(&input);
 
-    println!("{}", combined_input.iter().filter(|passport| passport.is_valid()).count());
+    println!(
+        "{}",
+        combined_input
+            .iter()
+            .filter(|passport| passport.is_valid())
+            .count()
+    );
 }
 
 #[cfg(test)]
-mod tests {
-
-}
+mod tests {}
