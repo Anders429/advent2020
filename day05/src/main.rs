@@ -7,7 +7,7 @@ fn seat_id(input: &str) -> usize {
         bin.push(match chars.next().unwrap() {
             'F' => '0',
             'B' => '1',
-            _ => ' '
+            _ => ' ',
         });
     }
     let row = usize::from_str_radix(&bin, 2).unwrap();
@@ -16,7 +16,7 @@ fn seat_id(input: &str) -> usize {
         bin.push(match chars.next().unwrap() {
             'L' => '0',
             'R' => '1',
-            _ => ' '
+            _ => ' ',
         });
     }
     let column = usize::from_str_radix(&bin, 2).unwrap();
