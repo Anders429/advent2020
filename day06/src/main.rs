@@ -1,5 +1,5 @@
-use util::read_input;
 use std::collections::HashSet;
+use util::read_input;
 
 fn sum_num_questions(input: &[String]) -> usize {
     let mut result = 0;
@@ -9,7 +9,10 @@ fn sum_num_questions(input: &[String]) -> usize {
             result += group.len();
             group = HashSet::new();
         }
-        group = group.union(&line.chars().collect::<HashSet<char>>()).map(|c| *c).collect();
+        group = group
+            .union(&line.chars().collect::<HashSet<char>>())
+            .map(|c| *c)
+            .collect();
     }
     result += group.len();
     result
@@ -20,26 +23,24 @@ fn sum_num_questions2(input: &[String]) -> usize {
     let mut group = HashSet::new();
     let mut new_group = true;
     for line in input {
-        //dbg!(&group);
         if line.is_empty() {
-            //dbg!(&group);
             result += group.len();
             group = HashSet::new();
             new_group = true;
-        }
-        else if new_group {
+        } else if new_group {
             group = line.chars().collect();
             new_group = false;
         } else {
-            group = group.intersection(&line.chars().collect::<HashSet<char>>()).map(|c| *c).collect();
+            group = group
+                .intersection(&line.chars().collect::<HashSet<char>>())
+                .map(|c| *c)
+                .collect();
         }
     }
-
-            //dbg!(&group);
+    // Add last group.
     result += group.len();
     result
 }
-
 
 fn main() {
     let args = std::env::args().collect::<Vec<String>>();
