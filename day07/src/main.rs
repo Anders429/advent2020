@@ -1,6 +1,5 @@
 use util::read_input;
 use std::collections::HashMap;
-use std::collections::HashSet;
 
 fn get_bag_tree(input: &[String]) -> HashMap<String, HashMap<String, usize>> {
     let mut result = HashMap::new();
@@ -68,17 +67,13 @@ fn get_bag_tree(input: &[String]) -> HashMap<String, HashMap<String, usize>> {
     result
 }
 
-fn contains_gold_bag(m: &HashMap<String, HashMap<String, usize>>, key: &str, visited: &mut HashSet<String>) -> bool {
+fn contains_gold_bag(m: &HashMap<String, HashMap<String, usize>>, key: &str) -> bool {
     let inner = m.get(key).unwrap();
     for inner_key in inner.keys() {
         if inner_key == "shiny gold" {
             return true;
         }
-        if visited.contains(inner_key) {
-            continue;
-        }
-        visited.insert(inner_key.clone());
-        if contains_gold_bag(m, &inner_key, visited) {
+        if contains_gold_bag(m, &inner_key) {
             return true;
         }
     }
@@ -94,7 +89,7 @@ fn find_gold_bag_count(input: &[String]) -> usize {
         if key == "shiny gold" {
             continue;
         }
-        if contains_gold_bag(&m, key, &mut HashSet::new()) {
+        if contains_gold_bag(&m, key) {
             result += 1;
         }
 
