@@ -125,5 +125,40 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
+    use crate::*;
 
+    #[test]
+    fn test_gold_bag_count() {
+        let input = [
+            "light red bags contain 1 bright white bag, 2 muted yellow bags.".to_string(),
+            "dark orange bags contain 3 bright white bags, 4 muted yellow bags.".to_string(),
+            "bright white bags contain 1 shiny gold bag.".to_string(),
+            "muted yellow bags contain 2 shiny gold bags, 9 faded blue bags.".to_string(),
+            "shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags.".to_string(),
+            "dark olive bags contain 3 faded blue bags, 4 dotted black bags.".to_string(),
+            "vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.".to_string(),
+            "faded blue bags contain no other bags.".to_string(),
+            "dotted black bags contain no other bags.".to_string(),
+        ];
+
+        assert_eq!(find_gold_bag_count(&input), 4);
+    }
+
+    #[test]
+    fn test_count_within_gold_bag() {
+
+        let input = [
+            "light red bags contain 1 bright white bag, 2 muted yellow bags.".to_string(),
+            "dark orange bags contain 3 bright white bags, 4 muted yellow bags.".to_string(),
+            "bright white bags contain 1 shiny gold bag.".to_string(),
+            "muted yellow bags contain 2 shiny gold bags, 9 faded blue bags.".to_string(),
+            "shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags.".to_string(),
+            "dark olive bags contain 3 faded blue bags, 4 dotted black bags.".to_string(),
+            "vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.".to_string(),
+            "faded blue bags contain no other bags.".to_string(),
+            "dotted black bags contain no other bags.".to_string(),
+        ];
+
+        assert_eq!(find_count_within_gold_bag(&input), 32);
+    }
 }
