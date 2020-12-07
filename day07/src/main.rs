@@ -1,7 +1,6 @@
 use util::read_input;
 use std::collections::HashMap;
 use std::collections::HashSet;
-use regex::Regex;
 
 fn get_bag_tree_2(input: &[String]) -> HashMap<String, HashMap<String, usize>> {
     let mut result = HashMap::new();
@@ -64,29 +63,6 @@ fn get_bag_tree_2(input: &[String]) -> HashMap<String, HashMap<String, usize>> {
             inner_map.insert(bag, num);
         }
         result.insert(root, inner_map);
-    }
-
-    result
-}
-
-fn get_bag_tree(input: &[String]) -> HashMap<String, HashMap<String, usize>> {
-    let re = Regex::new(r"(?P<root_bag>([a-z]+ ){2}) bags contain(?P<contained> (?P<num>\d+) (?P<bag>([a-z]+ ){2}) bags,?)+").unwrap();
-    let inner_re = Regex::new(r"(?P<num>\d+) (?P<bag>([a-z]+ ){2}) bags").unwrap();
-
-    let mut result = HashMap::new();
-    for line in input {
-        let caps = re.captures(&line).unwrap();
-        let root = &caps["root_bag"].to_string();
-        let contained = &caps["contained"];
-
-        let mut inner_map = HashMap::new();
-        for inner in contained.split(",") {
-            let inner_caps = inner_re.captures(&inner).unwrap();
-            let num = &inner_caps["num"];
-            let bag = &inner_caps["bag"].to_string();
-            inner_map.insert(bag.clone(), usize::from_str_radix(num, 10).unwrap());
-        }
-        result.insert(root.clone(), inner_map);
     }
 
     result
