@@ -2,7 +2,7 @@ use util::read_input;
 use std::collections::HashMap;
 use std::collections::HashSet;
 
-fn get_bag_tree_2(input: &[String]) -> HashMap<String, HashMap<String, usize>> {
+fn get_bag_tree(input: &[String]) -> HashMap<String, HashMap<String, usize>> {
     let mut result = HashMap::new();
 
     for line in input {
@@ -86,7 +86,7 @@ fn contains_gold_bag(m: &HashMap<String, HashMap<String, usize>>, key: &str, vis
 }
 
 fn find_gold_bag_count(input: &[String]) -> usize {
-    let m = get_bag_tree_2(input);
+    let m = get_bag_tree(input);
 
     let mut result = 0;
 
@@ -114,7 +114,7 @@ fn count_internal_bags(m: &HashMap<String, HashMap<String, usize>>, key: &str) -
 }
 
 fn find_count_within_gold_bag(input: &[String]) -> usize {
-    let m = get_bag_tree_2(input);
+    let m = get_bag_tree(input);
 
     count_internal_bags(&m, "shiny gold")
 }
