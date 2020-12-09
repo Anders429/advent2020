@@ -29,33 +29,16 @@ fn find(input: &[usize], preamble: usize) -> usize {
 }
 
 fn contiguous(input: &[usize], target: usize) -> usize {
-    let mut m: HashMap<usize, usize> = HashMap::new();
-    for (i, val) in input.iter().enumerate() {
-        //dbg!(i);
-        //dbg!(m.clone());
-        for key in m.keys().cloned().collect::<Vec<_>>() {
-            let combined = m[&key] + val;
-            m.insert(key, combined);
-            if combined == target {
-                println!("{} {}", input[key], val);
-                return input[key] + val;
-            }
-        }
-
-        m.insert(i, *val);
-    }
-    0
-}
-
-fn contiguous2(input: &[usize], target: usize) -> usize {
     for i in 0..input.len() {
         let mut sum = 0;
-        println!("");
+        //println!("");
         for j in i..input.len() {
-            println!("{}", input[j]);
+            //println!("{}", input[j]);
             sum += input[j];
             if sum == target {
-                return input[i] + input[j];
+                let mut cont = input[i..=j].iter().cloned().collect::<Vec<_>>();
+                cont.sort();
+                return cont[0] + cont[cont.len() - 1];
             }
         }
     }
@@ -68,5 +51,5 @@ fn main() {
     let input = read_input::<usize>(&args[1]).collect::<Vec<usize>>();
 
     println!("{}", find(&input, 25));
-    println!("{}", contiguous2(&input, 258585477));
+    println!("{}", contiguous(&input, 258585477));
 }
