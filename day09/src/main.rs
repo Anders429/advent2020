@@ -31,9 +31,7 @@ fn find(input: &[usize], preamble: usize) -> usize {
 fn contiguous(input: &[usize], target: usize) -> usize {
     for i in 0..input.len() {
         let mut sum = 0;
-        //println!("");
         for j in i..input.len() {
-            //println!("{}", input[j]);
             sum += input[j];
             if sum == target {
                 let mut cont = input[i..=j].iter().cloned().collect::<Vec<_>>();
