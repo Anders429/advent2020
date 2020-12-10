@@ -1,6 +1,6 @@
-use util::read_input;
-use std::str::FromStr;
 use std::collections::HashSet;
+use std::str::FromStr;
+use util::read_input;
 
 #[derive(Copy, Clone)]
 enum Instruction {
@@ -10,7 +10,6 @@ enum Instruction {
 }
 
 impl FromStr for Instruction {
-
     type Err = String;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
@@ -31,9 +30,7 @@ struct Console<'a> {
 
 impl<'a> Console<'a> {
     fn new(instructions: &'a [Instruction]) -> Self {
-        Self {
-            instructions,
-        }
+        Self { instructions }
     }
 
     fn run_until_loop(&self) -> isize {
@@ -42,15 +39,26 @@ impl<'a> Console<'a> {
         let mut index = 0;
         loop {
             if visited.contains(&index) {
-                return accumulator
+                return accumulator;
             }
             visited.insert(index.clone());
             let instr = &self.instructions[index];
             match instr {
-                Instruction::Nop(_) => {index += 1;},
-                Instruction::Acc(arg) => {accumulator += arg; index += 1},
-                Instruction::Jmp(arg) => {if *arg > 0 {index += *arg as usize} else {index -= arg.abs() as usize}},
-            } 
+                Instruction::Nop(_) => {
+                    index += 1;
+                }
+                Instruction::Acc(arg) => {
+                    accumulator += arg;
+                    index += 1
+                }
+                Instruction::Jmp(arg) => {
+                    if *arg > 0 {
+                        index += *arg as usize
+                    } else {
+                        index -= arg.abs() as usize
+                    }
+                }
+            }
         }
     }
 
@@ -60,7 +68,7 @@ impl<'a> Console<'a> {
         let mut index = 0;
         loop {
             if visited.contains(&index) {
-                return Err(())
+                return Err(());
             }
             visited.insert(index.clone());
 
@@ -79,10 +87,21 @@ impl<'a> Console<'a> {
             }
 
             match instr {
-                Instruction::Nop(_) => {index += 1;},
-                Instruction::Acc(arg) => {accumulator += arg; index += 1},
-                Instruction::Jmp(arg) => {if arg > 0 {index += arg as usize} else {index -= arg.abs() as usize}},
-            } 
+                Instruction::Nop(_) => {
+                    index += 1;
+                }
+                Instruction::Acc(arg) => {
+                    accumulator += arg;
+                    index += 1
+                }
+                Instruction::Jmp(arg) => {
+                    if arg > 0 {
+                        index += arg as usize
+                    } else {
+                        index -= arg.abs() as usize
+                    }
+                }
+            }
         }
         Ok(accumulator)
     }
@@ -92,7 +111,7 @@ impl<'a> Console<'a> {
         for (i, instr) in self.instructions.iter().enumerate() {
             match instr {
                 Instruction::Nop(_) | Instruction::Jmp(_) => result.push(i),
-                _ => {},
+                _ => {}
             }
         }
         result.into_boxed_slice()
@@ -103,8 +122,10 @@ impl<'a> Console<'a> {
 
         for i in indices.iter() {
             match self.does_loop(i) {
-                Ok(val) => {return val},
-                Err(_) => {continue;}
+                Ok(val) => return val,
+                Err(_) => {
+                    continue;
+                }
             }
         }
         panic!("");

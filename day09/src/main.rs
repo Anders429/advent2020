@@ -1,11 +1,13 @@
-use util::read_input;
-use std::collections::VecDeque;
 use std::collections::HashMap;
+use std::collections::VecDeque;
+use util::read_input;
 
 fn find(input: &[usize], preamble: usize) -> usize {
     let mut queue = VecDeque::new();
     let mut iter = input.iter();
-    iter.cloned().take(preamble).for_each(|i | queue.push_back(i));
+    iter.cloned()
+        .take(preamble)
+        .for_each(|i| queue.push_back(i));
 
     for i in input[preamble..input.len()].iter() {
         let mut found = false;

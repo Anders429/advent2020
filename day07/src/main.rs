@@ -1,5 +1,5 @@
-use util::read_input;
 use std::collections::HashMap;
+use util::read_input;
 
 fn get_bag_tree(input: &[String]) -> HashMap<String, HashMap<String, usize>> {
     let mut result = HashMap::new();
@@ -77,7 +77,7 @@ fn contains_gold_bag(m: &HashMap<String, HashMap<String, usize>>, key: &str) -> 
             return true;
         }
     }
-    return false
+    return false;
 }
 
 fn find_gold_bag_count(input: &[String]) -> usize {
@@ -92,7 +92,6 @@ fn find_gold_bag_count(input: &[String]) -> usize {
         if contains_gold_bag(&m, key) {
             result += 1;
         }
-
     }
     result
 }
@@ -146,7 +145,6 @@ mod tests {
 
     #[test]
     fn test_count_within_gold_bag() {
-
         let input = [
             "light red bags contain 1 bright white bag, 2 muted yellow bags.".to_string(),
             "dark orange bags contain 3 bright white bags, 4 muted yellow bags.".to_string(),
