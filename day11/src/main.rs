@@ -8,12 +8,19 @@ enum State {
 }
 
 fn make_grid(input: &[String]) -> Vec<Vec<State>> {
-    input.iter().map(|s| s.chars().map(|c| match c {
-        '.' => State::Floor,
-        'L' => State::Empty,
-        '#' => State::Occupied,
-        _ => State::Floor,
-    }).collect::<Vec<_>>()).collect::<Vec<_>>()
+    input
+        .iter()
+        .map(|s| {
+            s.chars()
+                .map(|c| match c {
+                    '.' => State::Floor,
+                    'L' => State::Empty,
+                    '#' => State::Occupied,
+                    _ => State::Floor,
+                })
+                .collect::<Vec<_>>()
+        })
+        .collect::<Vec<_>>()
 }
 
 fn iterate_until_change(grid: &Vec<Vec<State>>) -> usize {
@@ -29,8 +36,10 @@ fn iterate_until_change(grid: &Vec<Vec<State>>) -> usize {
         for i in 0..grid.len() {
             for j in 0..grid[0].len() {
                 match mut_grid[i][j] {
-                    State::Floor => {continue;},
-                    _ => {},
+                    State::Floor => {
+                        continue;
+                    }
+                    _ => {}
                 }
                 let mut count = 0;
                 for k in -1..=1 {
@@ -40,12 +49,16 @@ fn iterate_until_change(grid: &Vec<Vec<State>>) -> usize {
                         }
                         let i_prime = (i as isize) + k;
                         let j_prime = (j as isize) + l;
-                        if i_prime < 0 || i_prime >= grid.len() as isize || j_prime < 0 || j_prime >= grid[0].len() as isize {
+                        if i_prime < 0
+                            || i_prime >= grid.len() as isize
+                            || j_prime < 0
+                            || j_prime >= grid[0].len() as isize
+                        {
                             continue;
                         }
                         match mut_grid_clone[i_prime as usize][j_prime as usize] {
-                            State::Occupied => {count += 1},
-                            _ => {},
+                            State::Occupied => count += 1,
+                            _ => {}
                         }
                     }
                 }
@@ -55,20 +68,30 @@ fn iterate_until_change(grid: &Vec<Vec<State>>) -> usize {
                             mut_grid[i][j] = State::Occupied;
                             changed = true;
                         }
-                    },
+                    }
                     State::Occupied => {
                         if count >= 4 {
                             mut_grid[i][j] = State::Empty;
                             changed = true;
                         }
                     }
-                    _ => {},
+                    _ => {}
                 }
             }
         }
     }
 
-    mut_grid.iter().map(|v| v.iter().filter(|s| match s {State::Occupied => true, _ => false}).count()).sum()
+    mut_grid
+        .iter()
+        .map(|v| {
+            v.iter()
+                .filter(|s| match s {
+                    State::Occupied => true,
+                    _ => false,
+                })
+                .count()
+        })
+        .sum()
 }
 
 fn iterate_until_change_2(grid: &Vec<Vec<State>>) -> usize {
@@ -84,8 +107,10 @@ fn iterate_until_change_2(grid: &Vec<Vec<State>>) -> usize {
         for i in 0..grid.len() {
             for j in 0..grid[0].len() {
                 match mut_grid[i][j] {
-                    State::Floor => {continue;},
-                    _ => {},
+                    State::Floor => {
+                        continue;
+                    }
+                    _ => {}
                 }
                 let mut count = 0;
 
@@ -97,13 +122,22 @@ fn iterate_until_change_2(grid: &Vec<Vec<State>>) -> usize {
                         for m in 1..std::cmp::max(grid.len(), grid[0].len()) {
                             let i_prime = (i as isize) + (k * m as isize);
                             let j_prime = (j as isize) + (l * m as isize);
-                            if i_prime < 0 || i_prime >= grid.len() as isize || j_prime < 0 || j_prime >= grid[0].len() as isize {
+                            if i_prime < 0
+                                || i_prime >= grid.len() as isize
+                                || j_prime < 0
+                                || j_prime >= grid[0].len() as isize
+                            {
                                 continue;
                             }
                             match mut_grid_clone[i_prime as usize][j_prime as usize] {
-                                State::Occupied => {count += 1; break;},
-                                State::Empty => {break;},
-                                _ => {},
+                                State::Occupied => {
+                                    count += 1;
+                                    break;
+                                }
+                                State::Empty => {
+                                    break;
+                                }
+                                _ => {}
                             }
                         }
                     }
@@ -114,20 +148,30 @@ fn iterate_until_change_2(grid: &Vec<Vec<State>>) -> usize {
                             mut_grid[i][j] = State::Occupied;
                             changed = true;
                         }
-                    },
+                    }
                     State::Occupied => {
                         if count >= 5 {
                             mut_grid[i][j] = State::Empty;
                             changed = true;
                         }
                     }
-                    _ => {},
+                    _ => {}
                 }
             }
         }
     }
 
-    mut_grid.iter().map(|v| v.iter().filter(|s| match s {State::Occupied => true, _ => false}).count()).sum()
+    mut_grid
+        .iter()
+        .map(|v| {
+            v.iter()
+                .filter(|s| match s {
+                    State::Occupied => true,
+                    _ => false,
+                })
+                .count()
+        })
+        .sum()
 }
 
 fn main() {
