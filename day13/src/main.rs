@@ -69,15 +69,23 @@ fn chinese_remainder_theorem(busses: &[Bus]) -> usize {
     let mut x = operating[0].0;
     let mut N = operating[0].1;
 
-        // println!("ai={} ni={} ai+1={} ni+1={} x={} N={}", x, N, operating[1].0, operating[1].1, x, N);
-
     for i in 0..(operating.len() - 1) {
-        while x % operating[i + 1].1 != (operating[i+1].1 - operating[i + 1].0) || x < operating[i+1].1 {
+        while x % operating[i + 1].1 != (operating[i + 1].1 - operating[i + 1].0)
+            || x < operating[i + 1].1
+        {
             x += N;
         }
-        N *= operating[i+1].1;
+        N *= operating[i + 1].1;
 
-        println!("ai={} ni={} ai+1={} ni+1={} x={} N={}", operating[i].0, operating[i].1, operating[i+1].0, operating[i+1].1, x, N);
+        println!(
+            "ai={} ni={} ai+1={} ni+1={} x={} N={}",
+            operating[i].0,
+            operating[i].1,
+            operating[i + 1].0,
+            operating[i + 1].1,
+            x,
+            N
+        );
     }
 
     x
