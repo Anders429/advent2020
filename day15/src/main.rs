@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use util::read_input;
 
 fn get_numbers(s: &str) -> Box<[usize]> {
@@ -8,23 +7,25 @@ fn get_numbers(s: &str) -> Box<[usize]> {
         .into_boxed_slice()
 }
 
-fn find_index(input: &[usize], mut index: usize) -> usize {
-    let mut map = HashMap::new();
+fn find_index(input: &[usize], index: usize) -> usize {
+    let mut map = vec![None; index];
     let mut current_index = 0;
 
     for i in input {
-        map.insert(*i, current_index);
+        map[*i] = Some(current_index);
         current_index += 1;
     }
 
     let mut last = 0;
 
     while current_index <= (index - 2) {
-        last = match map.insert(last, current_index) {
+        let new_last = match map[last] {
             Some(prev_index) => current_index - prev_index,
             None => 0,
         };
+        map[last] = Some(current_index);
         current_index += 1;
+        last = new_last;
     }
 
     last
