@@ -1,8 +1,11 @@
-use util::read_input;
 use std::collections::HashMap;
+use util::read_input;
 
 fn get_numbers(s: &str) -> Box<[usize]> {
-    s.split(',').map(|s| usize::from_str_radix(s, 10).unwrap()).collect::<Vec<_>>().into_boxed_slice()
+    s.split(',')
+        .map(|s| usize::from_str_radix(s, 10).unwrap())
+        .collect::<Vec<_>>()
+        .into_boxed_slice()
 }
 
 fn find_index(input: &[usize], mut index: usize) -> usize {
