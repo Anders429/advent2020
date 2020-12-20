@@ -1,5 +1,5 @@
-use util::read_input;
 use std::collections::HashMap;
+use util::read_input;
 
 fn jolt_differences(input: &[usize]) -> usize {
     let mut sorted = input.iter().collect::<Vec<_>>();

@@ -111,50 +111,46 @@ fn waypoint(input: &[Instruction]) -> usize {
             Instruction::W(val) => {
                 x -= *val as isize;
             }
-            Instruction::L(val) => {
-                match *val {
-                    90 => {
-                        let c = x;
-                        x = -y;
-                        y = c;
-                    },
-                    180 => {
-                        x = -x;
-                        y = -y;
-                    },
-                    270 => {
-                        let c = x;
-                        x = y;
-                        y = -c;
-                    },
-                    360 => {},
-                    _ => {
+            Instruction::L(val) => match *val {
+                90 => {
+                    let c = x;
+                    x = -y;
+                    y = c;
+                }
+                180 => {
+                    x = -x;
+                    y = -y;
+                }
+                270 => {
+                    let c = x;
+                    x = y;
+                    y = -c;
+                }
+                360 => {}
+                _ => {
                     panic!("Unexpected direction.")
                 }
+            },
+            Instruction::R(val) => match *val {
+                90 => {
+                    let c = x;
+                    x = y;
+                    y = -c;
                 }
-            }
-            Instruction::R(val) => {
-                match *val {
-                    90 => {
-                        let c = x;
-                        x = y;
-                        y = -c;
-                    },
-                    180 => {
-                        x = -x;
-                        y = -y;
-                    },
-                    270 => {
-                        let c = x;
-                        x = -y;
-                        y = c;
-                    },
-                    360 => {},
-                    _ => {
+                180 => {
+                    x = -x;
+                    y = -y;
+                }
+                270 => {
+                    let c = x;
+                    x = -y;
+                    y = c;
+                }
+                360 => {}
+                _ => {
                     panic!("Unexpected direction.")
                 }
-                }
-            }
+            },
             Instruction::F(val) => {
                 x2 += *val as isize * x;
                 y2 += *val as isize * y;

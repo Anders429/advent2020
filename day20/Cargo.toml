@@ -1,0 +1,11 @@
+[package]
+name = "day20"
+version = "0.1.0"
+authors = ["Anders429 <anders.stefan.evensen@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+num-integer = "0.1.44"
+util = {path = "../util"}

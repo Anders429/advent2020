@@ -136,8 +136,9 @@ fn main() {
         messages
             .iter()
             .filter(|m| {
-                // println!("--------------"); 
-                RULES.get().unwrap()[0].matches(m)})
+                // println!("--------------");
+                RULES.get().unwrap()[0].matches(m)
+            })
             .count()
     );
 }

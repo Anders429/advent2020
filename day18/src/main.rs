@@ -1,5 +1,5 @@
-use util::read_input;
 use std::str::Chars;
+use util::read_input;
 
 enum Mode {
     Start,
@@ -89,7 +89,7 @@ fn evaluate(chars: &mut Chars) -> usize {
     }
 
     result
-} 
+}
 
 /// This is a mess.
 fn evaluate_2(chars: &mut Chars) -> usize {
@@ -147,7 +147,9 @@ fn evaluate_2(chars: &mut Chars) -> usize {
                         break;
                     }
                     Mode::Add => {
-                        remaining_chars.push_str(&(lhs + usize::from_str_radix(&digit_str, 10).unwrap_or(0)).to_string());
+                        remaining_chars.push_str(
+                            &(lhs + usize::from_str_radix(&digit_str, 10).unwrap_or(0)).to_string(),
+                        );
                         lhs = 0;
                         break;
                     }
@@ -178,7 +180,7 @@ fn evaluate_2(chars: &mut Chars) -> usize {
         } else {
             match mode {
                 Mode::Add => {
-                    lhs += usize::from_str_radix(&digit_str, 10).unwrap_or(0);   
+                    lhs += usize::from_str_radix(&digit_str, 10).unwrap_or(0);
                 }
                 _ => {
                     if lhs == 0 {
@@ -199,17 +201,31 @@ fn evaluate_2(chars: &mut Chars) -> usize {
     println!("{}", evaluate(&mut remaining_chars.chars()));
 
     evaluate(&mut remaining_chars.chars())
-
 }
 
 fn main() {
     let args = std::env::args().collect::<Vec<String>>();
 
     // let input = read_input::<Expression>(&args[1]).collect::<Vec<Expression>>();
-    
+
     // println!("{}", input.iter().map(|expr| expr.evaluate()).sum::<usize>())
     let input = read_input::<String>(&args[1]).collect::<Vec<String>>();
-    println!("{}", input.iter().map(|s| evaluate(&mut s.chars())).sum::<usize>());
+    println!(
+        "{}",
+        input
+            .iter()
+            .map(|s| evaluate(&mut s.chars()))
+            .sum::<usize>()
+    );
 
-    println!("{}", input.iter().map(|s| {println!(""); evaluate_2(&mut s.chars())}).sum::<usize>());
+    println!(
+        "{}",
+        input
+            .iter()
+            .map(|s| {
+                println!("");
+                evaluate_2(&mut s.chars())
+            })
+            .sum::<usize>()
+    );
 }

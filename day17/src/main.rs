@@ -63,7 +63,10 @@ fn iterate(grid: &Grid, iterations: usize) -> usize {
                         if i == 0 && j == 0 && k == 0 {
                             continue;
                         }
-                        if let Cube::Active = mut_grid.get(&(x+i, y+j, z+k)).unwrap_or(&Cube::Inactive) {
+                        if let Cube::Active = mut_grid
+                            .get(&(x + i, y + j, z + k))
+                            .unwrap_or(&Cube::Inactive)
+                        {
                             active_count += 1;
                         }
                     }
@@ -72,13 +75,19 @@ fn iterate(grid: &Grid, iterations: usize) -> usize {
             match mut_grid[&(*x, *y, *z)] {
                 Cube::Active => {
                     if active_count >= 2 && active_count <= 3 {
-                        println!("Inserting active at {} {} {} with count {}", x, y, z, active_count);
+                        println!(
+                            "Inserting active at {} {} {} with count {}",
+                            x, y, z, active_count
+                        );
                         new_grid.insert((*x, *y, *z), Cube::Active);
                     }
                 }
                 Cube::Inactive => {
                     if active_count == 3 {
-                        println!("Inserting active at {} {} {} with count {}", x, y, z, active_count);
+                        println!(
+                            "Inserting active at {} {} {} with count {}",
+                            x, y, z, active_count
+                        );
                         new_grid.insert((*x, *y, *z), Cube::Active);
                     }
                 }
@@ -108,8 +117,9 @@ fn iterate(grid: &Grid, iterations: usize) -> usize {
                                         if i == 0 && j == 0 && k == 0 {
                                             continue;
                                         }
-                                        if let Cube::Active =
-                                            mut_grid.get(&(x+i, y+j, z+k)).unwrap_or(&Cube::Inactive)
+                                        if let Cube::Active = mut_grid
+                                            .get(&(x + i, y + j, z + k))
+                                            .unwrap_or(&Cube::Inactive)
                                         {
                                             active_count += 1;
                                         }
@@ -117,8 +127,10 @@ fn iterate(grid: &Grid, iterations: usize) -> usize {
                                 }
                             }
                             if active_count == 3 {
-
-                        println!("Inserting active at {} {} {} with count {}", x, y, z, active_count);
+                                println!(
+                                    "Inserting active at {} {} {} with count {}",
+                                    x, y, z, active_count
+                                );
                                 new_grid.insert((x, y, z), Cube::Active);
                             }
                         }
@@ -164,7 +176,10 @@ fn iterate_4d(grid: &FourDimensionGrid, iterations: usize) -> usize {
                             if i == 0 && j == 0 && k == 0 && l == 0 {
                                 continue;
                             }
-                            if let Cube::Active = mut_grid.get(&(x+i, y+j, z+k, w+l)).unwrap_or(&Cube::Inactive) {
+                            if let Cube::Active = mut_grid
+                                .get(&(x + i, y + j, z + k, w + l))
+                                .unwrap_or(&Cube::Inactive)
+                            {
                                 active_count += 1;
                             }
                         }
@@ -223,8 +238,9 @@ fn iterate_4d(grid: &FourDimensionGrid, iterations: usize) -> usize {
                                                 if i == 0 && j == 0 && k == 0 && l == 0 {
                                                     continue;
                                                 }
-                                                if let Cube::Active =
-                                                    mut_grid.get(&(x+i, y+j, z+k, w+ l)).unwrap_or(&Cube::Inactive)
+                                                if let Cube::Active = mut_grid
+                                                    .get(&(x + i, y + j, z + k, w + l))
+                                                    .unwrap_or(&Cube::Inactive)
                                                 {
                                                     active_count += 1;
                                                 }
@@ -233,8 +249,7 @@ fn iterate_4d(grid: &FourDimensionGrid, iterations: usize) -> usize {
                                     }
                                 }
                                 if active_count == 3 {
-
-                            //println!("Inserting active at {} {} {} with count {}", x, y, z, active_count);
+                                    //println!("Inserting active at {} {} {} with count {}", x, y, z, active_count);
                                     new_grid.insert((x, y, z, w), Cube::Active);
                                 }
                             }
