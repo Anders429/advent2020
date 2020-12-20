@@ -238,7 +238,7 @@ fn arrange(tiles: &[Tile]) -> usize {
 fn arrange_and_get_ids(tiles: &[Tile]) -> Box<[Box<[Tile]>]> {
     let len = tiles.len().sqrt();
     dbg!(len);
-    // BFS.
+    // DFS.
     let mut queue: VecDeque<(Vec<Vec<Tile>>, HashSet<usize>)> = VecDeque::new();
     queue.push_back((Vec::new(), HashSet::new()));
 
